@@ -16,8 +16,21 @@ jobs:
     name: fmt · clippy · test · release build
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: roofer
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: roofer
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: payroof/stor
+          path: stor
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: payroof/wallet
+          path: wallet
       - run: rustup toolchain install  # the version and components in rust-toolchain.toml
       - run: cargo fmt --check
       - run: cargo clippy --locked --all-targets -- -D warnings
