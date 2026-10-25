@@ -1,0 +1,21 @@
+[package]
+name = "roofer-e2e"
+description = "End-to-end tests of Payroof, Stor and Payroof Wallet working together"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.99"
+license = "MIT OR Apache-2.0"
+publish = false
+
+# Each project stays independent; only this test crate depends on all of them.
+[dev-dependencies]
+altcha = "=1.0.0"
+axum = "=0.8.9"
+payroof-wallet-core = { path = "../../wallet", features = ["local-development"] }
+reqwest = { version = "=0.13.5", default-features = false, features = ["json", "rustls"] }
+serde_json = "=1.0.154"
+sqlx = { version = "=0.9.0", default-features = false, features = ["runtime-tokio", "sqlite"] }
+stortop = { path = "../../stor" }
+tokio = { version = "=1.53.3", features = ["rt-multi-thread", "macros", "net", "process", "time"] }
+toml = "=1.1.8"
+zeroize = "=1.9.1"

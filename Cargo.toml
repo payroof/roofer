@@ -1,0 +1,32 @@
+[package]
+name = "roofer"
+description = "Command line for the Payroof workspace: run the local stack (Anvil, Payroof, Stor, Wallet) and its end-to-end tests"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/payroof/roofer"
+homepage = "https://github.com/payroof/roofer"
+keywords = ["payroof", "anvil", "cli", "devtools"]
+categories = ["command-line-utilities", "development-tools"]
+# The end-to-end tests need the workspace sources; they are not part of the published crate.
+exclude = ["e2e", "rust-toolchain.toml"]
+
+[dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+libc = "0.2.190"
+serde_json = "1.0.154"
+
+[workspace]
+members = [".", "e2e"]
+resolver = "3"
+
+# The Wallet solves proof-of-work challenges (PBKDF2) before they expire in the
+# end-to-end tests; unoptimised dependencies are too slow for that.
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+strip = true
